@@ -20,7 +20,8 @@ if [ "$CI" = "true" ]
 then
     echo in CI    
     if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
-    echo ucc-gen $ARG_VERSION
+    echo executing ucc-gen $ARG_VERSION
+    ucc-gen $ARG_VERSION
 else
     ucc-gen $@
 fi
