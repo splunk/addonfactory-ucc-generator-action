@@ -16,5 +16,5 @@
 FROM ghcr.io/splunk/addonfactory-ucc-generator:v5.2.1
 
 COPY entrypoint.sh /entrypoint.sh
-
+WORKDIR /github/workspace
 ENTRYPOINT ["/entrypoint.sh"]
