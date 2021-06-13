@@ -18,7 +18,7 @@ name: "Addon Factory UCC Framework package generator"
 description: "Produce splunk package"
 runs:
   using: "docker"
-  image: "docker://ghcr.io/splunk/addonfactory-ucc-generator-action:v1.0.2"
+  image: "docker://ghcr.io/splunk/addonfactory-ucc-generator-action:v1.0.3"
 inputs:
   version:
     description: Version stamp for ouput
