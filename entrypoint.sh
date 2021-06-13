@@ -25,3 +25,7 @@ then
 else
     ucc-gen $@
 fi
+
+OUTPUT=output/$(ls output/)
+
+echo "::set-output name=OUTPUT::$OUTPUT"
