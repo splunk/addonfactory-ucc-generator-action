@@ -29,6 +29,13 @@ else
 fi
 
 OUTPUT=output/$(ls output/)
+SOURCE_REGEX='^.*/$'
+if [[ $OUTPUT =~ $SOURCE_REGEX ]];
+then
+    echo Removing trailing / from OUTPUT slim is picky
+    OUTPUT=$(echo $OUTPUT | sed 's/\(.*\)\//\1/')
+fi
+
 
 echo "::set-output name=OUTPUT::$OUTPUT"
 exit $ec
