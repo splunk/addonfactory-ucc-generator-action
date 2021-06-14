@@ -22,10 +22,13 @@ then
     if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
     echo executing ucc-gen $ARG_VERSION
     ucc-gen $ARG_VERSION
+    ec=$?
 else
     ucc-gen $@
+    ec=$?
 fi
 
 OUTPUT=output/$(ls output/)
 
 echo "::set-output name=OUTPUT::$OUTPUT"
+exit $ec
