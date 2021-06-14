@@ -36,6 +36,7 @@ then
     OUTPUT=$(echo $OUTPUT | sed 's/\(.*\)\//\1/')
 fi
 
+chmod -R +r output
 
 echo "::set-output name=OUTPUT::$OUTPUT"
 exit $ec
