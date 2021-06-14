@@ -16,10 +16,34 @@
 # action.yml
 name: "Addon Factory UCC Framework package generator"
 description: "Produce splunk package"
-runs:
-  using: "docker"
-  image: "docker://ghcr.io/splunk/addonfactory-ucc-generator-action:v1.1.2"
 inputs:
   version:
     description: Version stamp for ouput
     required: true
+outputs:
+  OUTPUT:
+    description: "Package produced from the build"
+    value: ${{ steps.output.outputs.result }}
+runs:
+  using: "composite"
+  steps:
+    - id: argver
+      shell: bash
+      run: |
+        if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
+        echo "::set-output name=result::$(echo $ARG_VERSION)"
+    - run: ucc-gen ${{ steps.argver.result }}
+      shell: bash
+    - run: chmod -R +r output
+      shell: bash
+    - id: output
+      shell: bash
+      run: |
+        OUTPUT=output/$(ls output/)
+        SOURCE_REGEX='^.*/$'
+        if [[ $OUTPUT =~ $SOURCE_REGEX ]];
+        then
+            echo Removing trailing / from OUTPUT slim is picky
+            OUTPUT=$(echo $OUTPUT | sed 's/\(.*\)\//\1/')
+        fi
+        echo "::set-output name=result::$(echo $OUTPUT)"
