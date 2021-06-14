@@ -12,13 +12,6 @@
     plugins: [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
-        ["@semantic-release/exec", {
-            "prepareCmd": 'yq -i eval ".runs.image = \"docker://ghcr.io/splunk/addonfactory-ucc-generator-action:v${nextRelease.version}\"" action.yml'
-        }],
-        ["@semantic-release/git", {
-            "assets": ["action.yml"],
-            "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
-        }],
         "@semantic-release/github"
   ]
 }
