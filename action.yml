@@ -18,7 +18,7 @@ name: "Addon Factory UCC Framework package generator"
 description: "Produce splunk package"
 inputs:
   version:
-    description: Version stamp for ouput
+    description: Version stamp for output
     required: true
 outputs:
   OUTPUT:
@@ -27,9 +27,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - id: argver
-      shell: bash
-      run: |
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "::set-output name=result::$(echo $ARG_VERSION)"
