@@ -33,6 +33,8 @@ runs:
         echo running ucc-gen $ARG_VERSION
         ucc-gen $ARG_VERSION
       shell: bash
+      env:
+        INPUT_VERSION: ${{ inputs.version }}
     - run: chmod -R +r output
       shell: bash
     - id: output
