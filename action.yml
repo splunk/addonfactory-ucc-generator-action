@@ -30,9 +30,10 @@ runs:
     - id: argver
       shell: bash
       run: |
+    - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "::set-output name=result::$(echo $ARG_VERSION)"
-    - run: ucc-gen ${{ steps.argver.result }}
+        ucc-gen $ARG_VERSION
       shell: bash
     - run: chmod -R +r output
       shell: bash
