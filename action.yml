@@ -28,7 +28,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        if [ -f Pipfile.lock ]"; 
+        if [ -f "Pipfile.lock" ]; 
         then
           pip3 install --user pipx
           pipx install pipenv
@@ -37,7 +37,7 @@ runs:
         fi
       shell: bash
     - run: |
-        if [ -f poetry.lock ]"; 
+        if [ -f "poetry.lock" ]
         then
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
           mkdir -p package/lib || true
