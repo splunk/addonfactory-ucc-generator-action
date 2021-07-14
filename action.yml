@@ -30,7 +30,7 @@ runs:
     - run: |
         if [ -f "Pipfile.lock" ]; 
         then
-          pip3 install --user pipx
+          pip3 install pipx
           pipx install pipenv
           mkdir -p package/lib || true
           pipenv lock -r > package/lib/requirements.txt   
