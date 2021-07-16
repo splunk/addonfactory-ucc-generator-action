@@ -29,14 +29,14 @@ runs:
   steps:
     - shell: bash
       run: |
-        if [ ! -f "Pipfile.lock" ] ; then exit 0
+        if [ ! -f "Pipfile.lock" ] ; then exit 0; fi
         mkdir -p package/lib || true
         pip install pipenv
         pipenv lock -r > package/lib/requirements.txt
         pipenv lock -d -r > requirements_dev.txt
     - shell: bash
       run: |
-        if [ ! -f "poetry.lock" ] ; then exit 0
+        if [ ! -f "poetry.lock" ] ; then exit 0; fi
         mkdir -p package/lib || true
         pip install poetry
         poetry export --without-hashes -o package/lib/requirements.txt
