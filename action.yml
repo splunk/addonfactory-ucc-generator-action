@@ -29,19 +29,26 @@ runs:
   steps:
     - shell: bash
       run: |
-        if [ ! -f "Pipfile.lock" ] ; then exit 0; fi
-        mkdir -p package/lib || true
-        pip install pipenv
-        pipenv lock -r > package/lib/requirements.txt
-        pipenv lock -d -r > requirements_dev.txt
+        if [ -f "Pipfile.lock" ]
+        then
+          mkdir -p package/lib || true
+          pip install pipenv
+          pipenv lock -r > package/lib/requirements.txt
+          pipenv lock -d -r > requirements_dev.txt
+        fi
     - shell: bash
       run: |
-        if [ ! -f "poetry.lock" ] ; then exit 0; fi
-        mkdir -p package/lib || true
-        pip install poetry
-        poetry export --without-hashes -o package/lib/requirements.txt
-        poetry export --without-hashes --dev -o requirements_dev.txt
-        if [ ! -z $INPUT_VERSION ]; then poetry version $INPUT_VERSION; fi
+        if [ -f "poetry.lock" ]
+        then
+          mkdir -p package/lib || true
+          pip install poetry
+          poetry export --without-hashes -o package/lib/requirements.txt
+          poetry export --without-hashes --dev -o requirements_dev.txt
+          if [ ! -z $INPUT_VERSION ]
+          then
+            poetry version $INPUT_VERSION
+          fi
+        fi
     - shell: bash
       run: pip install -r requirements_dev.txt
     - run: |
@@ -53,8 +60,14 @@ runs:
       env:
         INPUT_VERSION: ${{ inputs.version }}
     - run: |
-        if [ ! -z $INPUT_VERSION ]; then yarn version --new-version $INPUT_VERSION --no-git-tag-version; fi
-        [ -f package.json ] ;yarn run build
+        if [ ! -z $INPUT_VERSION ]
+        then
+          yarn version --new-version $INPUT_VERSION --no-git-tag-version
+        fi
+        if [ -f package.json ]
+        then
+          yarn run build
+        fi
       shell: bash
     - run: chmod -R +r output
       shell: bash
