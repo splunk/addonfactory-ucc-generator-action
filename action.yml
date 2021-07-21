@@ -60,12 +60,13 @@ runs:
       env:
         INPUT_VERSION: ${{ inputs.version }}
     - run: |
-        if [ ! -z $INPUT_VERSION ]
-        then
-          yarn version --new-version $INPUT_VERSION --no-git-tag-version
-        fi
         if [ -f package.json ]
         then
+          yarn
+          if [ ! -z $INPUT_VERSION ]
+          then
+            yarn version --new-version $INPUT_VERSION --no-git-tag-version
+          fi
           yarn run build
         fi
       shell: bash
