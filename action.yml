@@ -72,6 +72,8 @@ runs:
       shell: bash
     - run: chmod -R +r output
       shell: bash
+    - run: chmod -R -w output
+      shell: bash
     - id: output
       shell: bash
       run: |
