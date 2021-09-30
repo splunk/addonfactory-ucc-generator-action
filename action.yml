@@ -74,7 +74,7 @@ runs:
       shell: bash
     - run: chmod -R go-w output
       shell: bash
-    - run: rm -rf /output/lib/*.dist-info
+    - run: rm -rf output/lib/*.dist-info
       shell: bash
     - id: output
       shell: bash
