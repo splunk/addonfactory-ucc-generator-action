@@ -74,7 +74,7 @@ runs:
       shell: bash
     - run: chmod -R go-w output
       shell: bash
-    - run: find output -type d -name '*.dist-info' -exec rm -rf {} \;
+    - run: find output -type d -name '*.dist-info' | xargs rm -r
       shell: bash
     - id: output
       shell: bash
