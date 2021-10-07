@@ -49,13 +49,17 @@ runs:
             poetry version $INPUT_VERSION
           fi
         fi
-    - shell: bash
-      run: python3.7 -m pip install -r requirements_dev.txt
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "::set-output name=result::$(echo $ARG_VERSION)"
         echo running ucc-gen $ARG_VERSION
-        python3.7 -m ucc-gen $ARG_VERSION
+        python3.7 -m pip install virtualenv
+        python3.7 -m virtualenv venv373
+        source venv373/bin/activate
+        python -V
+        pip install -r requirements_dev.txt
+        pip list | grep splunk-add-on-ucc-framework
+        ucc-gen $ARG_VERSION
         ls -al output/Splunk_TA_rsa_securid_cas/lib/Crypto/Cipher
       shell: bash
       env:
