@@ -32,16 +32,16 @@ runs:
         if [ -f "Pipfile.lock" ]
         then
           mkdir -p package/lib || true
-          python3.7 -m pip install pipenv
-          python3.7 -m pipenv lock -r > package/lib/requirements.txt
-          python3.7 -m pipenv lock -d -r > requirements_dev.txt
+          pip install pipenv
+          pipenv lock -r > package/lib/requirements.txt
+          pipenv lock -d -r > requirements_dev.txt
         fi
     - shell: bash
       run: |
         if [ -f "poetry.lock" ]
         then
           mkdir -p package/lib || true
-          python3.7 -m pip install poetry
+          pip install poetry
           poetry export --without-hashes -o package/lib/requirements.txt
           poetry export --without-hashes --dev -o requirements_dev.txt
           if [ ! -z $INPUT_VERSION ]
@@ -52,15 +52,25 @@ runs:
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "::set-output name=result::$(echo $ARG_VERSION)"
-        echo running ucc-gen $ARG_VERSION
+        echo "Installing Python 3.7.3"
+        sudo apt update
+        sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev wget libbz2-dev
+        wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+        tar -xf Python-3.7.3.tgz
+        cd Python-3.7.3
+        ./configure --enable-optimizations
+        sudo make altinstall
+        python3.7 --version
+        python3.7 -m pip install --upgrade pip --user
         python3.7 -m pip install virtualenv
         python3.7 -m virtualenv venv373
         source venv373/bin/activate
+        echo "Inside Virtualenv"
         python -V
         pip install -r requirements_dev.txt
         pip list | grep splunk-add-on-ucc-framework
+        echo running ucc-gen $ARG_VERSION
         ucc-gen $ARG_VERSION
-        ls -al output/Splunk_TA_rsa_securid_cas/lib/Crypto/Cipher
       shell: bash
       env:
         INPUT_VERSION: ${{ inputs.version }}
