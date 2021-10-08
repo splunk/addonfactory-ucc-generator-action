@@ -52,6 +52,7 @@ runs:
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "::set-output name=result::$(echo $ARG_VERSION)"
+        ls -al
         echo "Installing Python 3.7.3"
         sudo apt update
         sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev wget libbz2-dev
