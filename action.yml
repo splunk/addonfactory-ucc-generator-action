@@ -61,6 +61,7 @@ runs:
         cd Python-3.7.3
         ./configure --enable-optimizations
         sudo make altinstall
+        cd ..
         python3.7 --version
         python3.7 -m pip install --upgrade pip --user
         python3.7 -m pip install virtualenv
