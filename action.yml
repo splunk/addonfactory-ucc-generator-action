@@ -61,7 +61,7 @@ runs:
       run: pip install -r requirements_dev.txt
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
-        echo "::set-output name=result::$(echo $ARG_VERSION)"
+        echo "result=$(echo $ARG_VERSION)" >> $GITHUB_OUTPUT
         echo running ucc-gen $ARG_VERSION
         ucc-gen $ARG_VERSION
       shell: bash
@@ -92,4 +92,4 @@ runs:
             echo Removing trailing / from OUTPUT slim is picky
             OUTPUT=$(echo $OUTPUT | sed 's/\(.*\)\//\1/')
         fi
-        echo "::set-output name=result::$(echo $OUTPUT)"
+        echo "result=$(echo $OUTPUT)" >> $GITHUB_OUTPUT
