@@ -40,7 +40,7 @@ runs:
       run: |
         if [ -f "poetry.lock" ]
         then
-          pip install poetry==1.1.15           
+          pip install poetry==1.2.2 poetry-plugin-export==1.2.0
           poetry export --without-hashes -o requirements.txt
           if [ "$(grep -cve '^\s*$' requirements.txt)" -ne 0 ]
           then
