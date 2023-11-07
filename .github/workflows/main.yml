@@ -24,7 +24,14 @@ on:
     branches:
       - "main"
       - "develop"
-
+permissions:
+  actions: read
+  checks: write
+  contents: write
+  deployments: read
+  packages: write
+  pull-requests: read
+  statuses: write
 jobs:
   build_action:
     runs-on: ubuntu-latest
