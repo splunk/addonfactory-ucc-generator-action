@@ -72,7 +72,7 @@ runs:
           ./.ucc_venv/bin/python -m pip install "splunk-add-on-ucc-framework==$UCC_VERSION"
         
           echo running ucc-gen $UCC_VERSION in an isolated environment $ARG_VERSION
-          ./.ucc_venv/bin/ucc_gen $ARG_VERSION
+          ./.ucc_venv/bin/ucc-gen $ARG_VERSION
         else
           echo running ucc-gen $ARG_VERSION
           ucc-gen $ARG_VERSION
