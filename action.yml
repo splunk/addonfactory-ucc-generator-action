@@ -65,14 +65,14 @@ runs:
         
         if [ -f "UCC_VERSION" ]
         then
-          pip install pip-run
           UCC_VERSION=$(cat UCC_VERSION)
         
-          echo "Installing UCC version $UCC_VERSION"
-          UCC_EXECUTABLE="pip-run \"splunk-add-on-ucc-framework==$UCC_VERSION\" -- '!ucc-gen'"
+          echo creating an isolated environment for ucc-gen $UCC_VERSION
+          python3 -m venv .ucc_venv
+          ./.ucc_venv/bin/python -m pip install "splunk-add-on-ucc-framework==$UCC_VERSION"
         
-          echo running ucc-gen in an isolated environment $ARG_VERSION
-          pip-run "splunk-add-on-ucc-framework==$UCC_VERSION" -- '!ucc-gen' $ARG_VERSION
+          echo running ucc-gen $UCC_VERSION in an isolated environment $ARG_VERSION
+          ./.ucc_venv/bin/ucc_gen $ARG_VERSION
         else
           echo running ucc-gen $ARG_VERSION
           ucc-gen $ARG_VERSION
