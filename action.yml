@@ -80,10 +80,10 @@ runs:
         
         if [ -f "./.ucc_venv/bin/ucc-gen" ]
         then
-          echo running ucc-gen $UCC_VERSION in an isolated environment $ARG_VERSION
+          echo "running ucc-gen $UCC_VERSION in an isolated environment $ARG_VERSION"
           ./.ucc_venv/bin/ucc-gen $ARG_VERSION
         else
-          echo running ucc-gen $ARG_VERSION
+          echo "running ucc-gen $ARG_VERSION"
           ucc-gen $ARG_VERSION
         fi
       shell: bash
