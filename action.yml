@@ -24,6 +24,9 @@ outputs:
   OUTPUT:
     description: "Package produced from the build"
     value: ${{ steps.output.outputs.result }}
+env:
+  POETRY_VERSION: "2.1.4"
+  POETRY_EXPORT_PLUGIN_VERSION: "1.9.0"
 runs:
   using: "composite"
   steps:
@@ -40,7 +43,7 @@ runs:
       run: |
         if [ -f "poetry.lock" ]
         then
-          pip install poetry==1.5.1 poetry-plugin-export==1.4.0
+          pip install poetry==${{ env.POETRY_VERSION }} poetry-plugin-export==${{ env.POETRY_EXPORT_PLUGIN_VERSION }}
           poetry export --without-hashes -o requirements.txt
           if [ "$(grep -cve '^\s*$' requirements.txt)" -ne 0 ]
           then
