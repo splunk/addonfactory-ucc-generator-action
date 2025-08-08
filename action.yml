@@ -62,11 +62,33 @@ runs:
         fi
     - shell: bash
       run: pip install -r requirements_dev.txt
+    - shell: bash
+      run: |
+        if [ -f "requirements_ucc.txt" ]
+        then
+          echo "Found requirements_ucc.txt. Installing UCC dependencies in an isolated environment"
+          python3 -m venv .ucc_venv
+          ./.ucc_venv/bin/python -m pip install -r requirements_ucc.txt
+        
+          # if file does not exist, show an error
+          if [ ! -f "./.ucc_venv/bin/ucc-gen" ]
+          then
+              echo "ucc-gen not found, please check your requirements_ucc.txt file"
+              exit 1
+          fi
+        fi
     - run: |
         if [ ! -z $INPUT_VERSION ]; then ARG_VERSION="--ta-version=${INPUT_VERSION}"; fi
         echo "result=$(echo $ARG_VERSION)" >> $GITHUB_OUTPUT
-        echo running ucc-gen $ARG_VERSION
-        ucc-gen $ARG_VERSION
+        
+        if [ -f "./.ucc_venv/bin/ucc-gen" ]
+        then
+          echo "running ucc-gen $UCC_VERSION in an isolated environment $ARG_VERSION"
+          ./.ucc_venv/bin/ucc-gen $ARG_VERSION
+        else
+          echo "running ucc-gen $ARG_VERSION"
+          ucc-gen $ARG_VERSION
+        fi
       shell: bash
       env:
         INPUT_VERSION: ${{ inputs.version }}
