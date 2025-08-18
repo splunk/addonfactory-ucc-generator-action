@@ -38,7 +38,7 @@ jobs:
     name: Build Action
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Semantic Release
@@ -50,7 +50,7 @@ jobs:
     needs: build_action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: splunk/addonfactory-update-semver@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
