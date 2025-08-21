@@ -1,3 +1,5 @@
 # addonfactory-ucc-generator-action
 
-Action to create the UCC build for the addon
+**Note**: this repository is deprecated and should not be used.
+
+Action to create the UCC build for the addon.
